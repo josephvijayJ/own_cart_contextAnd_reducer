@@ -1,23 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import { GetContext } from './context/CartContext';
+import { Container, Row, Col } from 'react-bootstrap';
+import Cards from './components/Cards';
+import CartItem from './components/CartItem';
 
 function App() {
+  const values = GetContext();
+  console.log('The values are ', values);
+  const {
+    state: { products },
+  } = GetContext();
+  console.log(products);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <>
+        <Container>
+          <Row>
+            <Col lg="8">
+              {products.map((prod) => (
+                <Cards key={prod.id} productInfo={prod} />
+              ))}
+            </Col>
+            <Col>
+              <CartItem />
+            </Col>
+          </Row>
+        </Container>
+      </>
     </div>
   );
 }
